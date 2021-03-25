@@ -1,0 +1,36 @@
+# Getting Started
+
+## 1. Run chromedriver
+
+```bash
+$ chromedriver
+```
+If you don't install `chromedriver`, you can install by `homebrew`.
+```bash
+brew install chromedriver
+```
+
+**Make sure you have the right version of chromedriver and GoogleChrome.**
+```bash
+# check the version of Google Chrome
+# ex. MacOS
+$ /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --version
+Google Chrome 89.0.4389.82
+
+# check the version of chromedriver
+$ chromedriver --version
+ChromeDriver 89.0.4389.23 (61b08ee2c50024bab004e48d2b1b083cdbdac579-refs/branch-heads/4389@{#294})
+```
+
+## 2. Exec demo.sh
+```bash
+$ git clone git@github.com:Rasukarusan/shellnium.git
+$ cd shellnium
+$ sh demo.sh
+```
+
+You can add chrome options. e.g. `--headless`.
+```bash
+$ sh demo.sh --headless --lang=es
+```
+
