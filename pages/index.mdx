@@ -1,0 +1,26 @@
+# Shellnium
+
+Shellnium is the selenium webdriver for Bash. You can exec selenium simply on your terminal.  
+**All you need is Bash or Zsh.**  
+
+## Overview
+
+```bash
+#!/usr/bin/env bash
+source ./selenium.sh
+
+main() {
+    # Open the URL
+    navigate_to 'https://google.co.jp'
+
+    # Get the search box
+    local searchBox=$(find_element 'name' 'q')
+
+    # send keys
+    send_keys $searchBox "animal\n"
+}
+
+main
+```
+
+## Features
