@@ -1,49 +1,312 @@
-export const Sorry = () => {
-    return <span style={{color:'red', fontWeight: 'bold'}}>I'm sorry, but I still working on making documents!</span>
-}
-
 # Documentation
 ---
 
-<Sorry />
-
 In order to better understand what is webdriver, we recommend reading [this document](https://www.w3.org/TR/webdriver/). 
 
-## Sessions
-> A session is equivalent to a single instantiation of a particular user agent, including all its child browsers. WebDriver gives each session a unique session ID that can be used to differentiate one session from another, allowing multiple user agents to be controlled from a single HTTP server, and allowing sessions to be routed via a multiplexer (known as an intermediary node).
+--- 
+
+## # Sessions
 
 ## Is Ready
+
+Check if ChromeDriver is running.  
+Usually, this method is executed at the beginning of the script.
+
+### Command
+`is_ready` 
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/core.sh
+
+if [ "$(is_ready)" != 'true' ]; then
+  printf "\e[35m[ERROR] chromedriver is not running.\e[m\n"
+  exit
+fi
+```
+
 ## New Session
+
+Creates a new WebDriver session.
+
+### Command
+`new_session`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/core.sh
+
+sessionId=$(new_session)
+BASE_URL=${ROOT}/session/${sessionId}
+
+# you can use ${BASE_URL} to exec WebDriver API
+# ex.) curl -s -X GET ${BASE_URL}/url
+```
+
+You can set args for chrome options. `new_session $@`.
+```bash
+# headless
+sessionId=$(new_session --headless)
+# headless and lang=es
+sessionId=$(new_session --headless --lang=es)
+```
+
 ## Delete Session
+
+Close the session.
+
+### Command
+`delete_session`
+
+### Example
+```bash
+#!/usr/bin/env bash
+# create a new session in ./lib/selenium.sh
+source ./lib/selenium.sh
+
+# open the page
+navigate_to 'https://www.google.com'
+
+# close the session
+delete_session
+```
 ---
 
-## Timeouts
->A timeouts configuration is a record of the different timeouts that control the behavior of script evaluation, navigation, and element retrieval:
-
+## # Timeouts
 ## Get Timeouts
+Return the active session’s timeouts configuration. The configuration detail is [here](https://www.w3.org/TR/webdriver/#dfn-timeouts-configuration).
+
+### Command
+`get_timeouts`
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+timeConfig=$(get_timeouts)
+
+### output ###
+# {
+#   "implicit": 0,
+#   "pageLoad": 300000,
+#   "script": 30000
+# }
+```
 ## Set Timeouts
+Set timeouts configuration.
+### Command
+```bash
+set_timeouts ${script} ${pageLoad} ${implicit}
+```
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+script=1000
+pageLoad=2000
+implicit=3000
+set_timeouts ${script} ${pageLoad} ${implicit}
+
+get_timeouts
+
+### output ###
+# {
+#   "implicit": 3000,
+#   "pageLoad": 2000,
+#   "script": 1000
+# }
+```
+
 ## Set Timeout Script
+Set script timeouts.
+
+### Command
+```bash
+set_timeout_script ${value}
+```
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+set_timeout_script 1000
+
+get_timeouts
+
+### output ###
+# {
+#   "implicit": 0,
+#   "pageLoad": 300000,
+#   "script": 1000
+# }
+
+```
 ## Set Timeout PageLoad
+Set pageLoad timeouts.
+### Command
+```bash
+set_timeout_pageLoad ${value}
+```
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+set_timeout_pageLoad 2000
+
+get_timeouts
+
+### output ###
+# {
+#   "implicit": 0,
+#   "pageLoad": 2000,
+#   "script": 30000
+# }
+```
 ## Set Timeout Implicit
+Set implicit timeouts.
+### Command
+```bash
+set_timeout_implicit ${value}
+```
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+set_timeout_implicit 3000
+
+get_timeouts
+
+### output ###
+# {
+#   "implicit": 3000,
+#   "pageLoad": 300000,
+#   "script": 300000
+# }
+```
 ---
 
-## Navigation
->The commands in this section allow navigation of the current top-level browsing context to new URLs and introspection of the document currently loaded in this browsing context.
+## # Navigation
 
 ## Navigate To
+Open the url.
+### Command
+```bash
+navigate_to ${url}
+```
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to https://www.google.com
+```
+
 ## Get Current Url
+Get the current url.
+### Command
+`get_current_url`
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to https://www.google.com
+
+currentUrl=$(get_current_url)
+# https://www.google.com/
+```
+
 ## Get Title
+Get the page title.
+### Command
+`get_title`
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to https://www.google.com
+
+title=$(get_title)
+# Google
+```
+
 ## Back
+Invoking `window.history.back`.
+### Command
+`back`
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+# open google top
+navigate_to https://www.google.com
+
+# no page
+back
+```
+
 ## Forward
+Invoking `window.history.forward`.
+
+### Command
+`forward`
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+# open google top
+navigate_to https://www.google.com
+
+# no page
+back
+
+# re-open google top
+forward
+```
+
 ## Refresh
+Refresh the current page.
+
+### Command
+`refresh`
+
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to https://www.google.com
+
+refresh
+```
+
 ---
 
-## Element Retrieval
->The Find Element, Find Elements, Find Element From Element, and Find Elements From Element commands allow lookup of individual elements and collections of elements. Element retrieval searches are performed using pre-order traversal of the document’s nodes that match the provided selector’s expression. Elements are serialized and returned as web elements.
+## # Element Retrieval
 
 ## Find Element
 You can use `find_element` method to find a element.
-```sh
+
+#### Command
+
+```bash
 find_element ${property} ${value}
 ```
 
@@ -57,12 +320,22 @@ The `${property}` is following:
 - 'class name'
 - 'xpath'
 
-To find multiple elements, you can use `find_elements` method.
-```sh
-find_elements ${property} ${value}
+#### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+# Open the apage.
+navigate_to 'https://www.google.com'
+
+# get the element of the search box.
+searchBox=$(find_element 'name' 'q')
+
+# You can perform various actions on the element you just retrieved. ex.) `send_keys`
+send_keys $searchBox "animal\n"
 ```
 
-### Find Element By Id
+## Find Element By Id
 
 Example usage:
 ```html
@@ -74,11 +347,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'id' 'welcome')
 ```
 
-### Find Element By Name
+## Find Element By Name
 
 Example usage:
 ```html
@@ -90,11 +365,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'name' 'username')
 ```
 
-### Find Element By Css Selector
+## Find Element By Css Selector
 
 Example usage:
 ```html
@@ -106,11 +383,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'css selector' 'p.content')
 ```
 
-### Find Element By Link Text
+## Find Element By Link Text
 
 Example usage:
 ```html
@@ -122,11 +401,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'link text' 'Login')
 ```
 
-### Find Element By Partial Link Text
+## Find Element By Partial Link Text
 
 Example usage:
 ```html
@@ -138,11 +419,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'partial link text' 'Log')
 ```
 
-### Find Element By Tag Name
+## Find Element By Tag Name
 
 Example usage:
 ```html
@@ -154,11 +437,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'tag name' 'h1')
 ```
 
-### Find Element By Class Name
+## Find Element By Class Name
 
 Example usage:
 ```html
@@ -170,11 +455,13 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'class name' 'title')
 ```
 
-### Find Element By Xpath
+## Find Element By Xpath
 
 Example usage:
 ```html
@@ -189,52 +476,559 @@ Example usage:
 ```
 
 Command usage:
-```sh
+```bash
+#!/usr/bin/env bash
+...
 element=$(find_element 'xpath' '//*[@id="contents"]/p[1]')
 ```
 
 ## Find Elements
+To find multiple elements, you can use `find_elements` method.
+
+### Command
+```bash
+find_elements ${property} ${value}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+# Open the apage.
+navigate_to 'https://www.google.com/?gl=us&hl=en&gws_rd=cr&pws=0'
+
+elements=$(find_elements 'tag name' 'a')
+
+for element in ${elements[@]};do
+  get_text ${element}
+done
+
+### output ###
+# About
+# Store
+# Gmail
+# Images
+# 
+# Sign in
+# 
+# 
+# Advertising
+# Business
+# How Search works
+# Carbon neutral since 2007
+# Privacy
+# Terms
+```
+
 ## Find Element From Element
+Example usage:
+```html
+<html>
+<body>
+  <div id="container">
+    <h1>Welcome</h1>
+  </div>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+container=$(find_element 'id' 'container')
+title=$(find_element_from_element ${container} 'tag name' 'h1')
+get_text ${title}
+
+### output ###
+# Welcome
+```
+
 ## Find Elements From Element
+Example usage:
+```html
+<html>
+<body>
+  <div id="container">
+    <h2>Welcome1</h2>
+    <h2>Welcome2</h2>
+  </div>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+container=$(find_element 'id' 'container')
+titles=$(find_element_from_element ${container} 'tag name' 'h2')
+for title in ${titles[@]}; do
+  get_text ${title}
+done
+
+### output ###
+# Welcome1
+# Welcome2
+```
 ## Get Active Element
+Get a active element.
+
+### Command
+`get_active_element`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+# The top page of google has the search box in focus.
+searchBox=$(get_active_element)
+```
+
 ---
 
-## Element State
->To calculate the absolute position of element:
+## # Element State
 
 ## Get Attribute
+Example usage:
+```html
+<html>
+<body>
+  <h1 id="title" style="color:red;">Welcome</h1>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+element=$(find_element 'id' 'title')
+get_attribute ${element} 'style'
+### output ###
+# color:red;
+```
+
 ## Get Property
+Example usage:
+```html
+<html>
+<body>
+  <input id="username" type="text">
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+input=$(find_element 'id' 'username')
+send_keys $input 'hoge'
+get_property ${input} 'value'
+### output ###
+# hoge
+```
+
 ## Get Css Value
+Example usage:
+```html
+<html>
+<body>
+  <style>
+    h1 {
+      display: block;
+    }
+  </style>
+  <h1 id="container">Welcome</h1>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+element=$(find_element 'id' 'container')
+get_css_value ${element} 'display'
+### output ###
+# block
+```
+
 ## Get Text
+Example usage:
+```html
+<html>
+<body>
+  <h1 id="container">Welcome</h1>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+element=$(find_element 'id' 'container')
+get_text ${element}
+### output ###
+# Welcome
+```
+
 ## Get Tag Name
+Example usage:
+```html
+<html>
+<body>
+  <h1 id="container">Welcome</h1>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+element=$(find_element 'id' 'container')
+get_tag_name ${element}
+### output ###
+# h1
+```
+
 ## Get Rect
+Example usage:
+```html
+<html>
+<body>
+  <h1 id="container">Welcome</h1>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+element=$(find_element 'id' 'container')
+get_rect ${element}
+### output ###
+# {
+#   "height": 37,
+#   "width": 784,
+#   "x": 8,
+#   "y": 8
+# }
+```
 ## Is Element Enabled
+Example usage:
+```html
+<html>
+<body>
+  <h1 id="container">Welcome</h1>
+</body>
+<html>
+```
+
+Command usage:
+```bash
+#!/usr/bin/env bash
+...
+element=$(find_element 'id' 'container')
+is_element_enabled ${element}
+### output ###
+# true
+```
 ---
 
-## Element Interaction
->The element interaction commands provide a high-level instruction set for manipulating form controls. Unlike Actions, they will implicitly scroll elements into view and check that it is an interactable element.
+## # Element Interaction
 
 ## Send Keys
+Set text to the input element.
+
+### Command
+```bash
+send_keys ${inputElement} ${text}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+searchBox=$(find_element 'name' 'q')
+
+# Input to the search box and enter.
+send_keys ${searchBox} "animal\n"
+```
+
+
 ## Click
+Click the element.
+### Command
+```bash
+click ${element}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+searchBox=$(find_element 'name' 'q')
+
+click ${searchBox}
+```
+
 ## Element Clear
+
+Set an empty string to input element.
+
+```bash
+element_clear ${element}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+searchBox=$(find_element 'name' 'q')
+
+send_keys $searchBox 'hoge'
+
+element_clear ${searchBox}
+# 'hoge' is removed
+```
 ---
 
 ## Document
 
 ## Exec Script
+Execute Javascript codes.
+### Command
+```bash
+exec_script ${value}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+exec_script "alert('hoge')"
+```
+
 ## Screenshot
+Screenshot the current page.
+### Command
+```bash
+screenshot
+# or
+screenshot ${path}
+```
+Default the screenshot saved to`./screenshot.png`.
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+screenshot ./lib/hoge.png
+
+#
+# $ tree
+# .
+# ├── demo.sh
+# ├── lib
+# │   ├── core.sh
+# │   ├── hoge.png # <-- saved!
+# │   ├── selenium.sh
+# │   └── util.sh
+```
+
 ---
 
-## Context
->Many WebDriver commands happen in the context of either the current browsing context or current top-level browsing context. The current top-level browsing context is represented in the protocol by its associated window handle. When a top-level browsing context is selected using the Switch To Window command, a specific browsing context can be selected using the Switch to Frame command.
+## # Context
 
 ## Get Window Handle
+### Command
+`get_window_handle`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+get_window_handle
+### output ###
+# CDwindow-FDE2D85F1C439C4AA3817A3000F12212
+```
+
 ## Get Window Handles
-## Delete Window
+### Command
+`get_window_handles`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+newWindow=$(new_window)
+get_window_handles
+### output ###
+# CDwindow-865D9DCFC26B4DE003F428C5C182E06A
+# CDwindow-96116C7F4548CB8B155F8821B6DEFDEB
+```
+
 ## New Window
+Create a new tab.
+
+### Command
+`new_window`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+new_window
+```
+
+## Delete Window
+Close the tab.
+
+### Command
+```bash
+delete_window ${window}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+oldWindow=$(get_window_handle)
+new_window
+delete_window ${oldWindow}
+```
+
 ## Switch To Window
+Switch to the tab.
+
+### Command
+```bash
+switch_to_window ${window}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+newWindow=$(new_window)
+switch_to_window $newWindow
+```
+
 ## Get Window Rect
+Get current window rect.
+
+### Command
+`get_window_rect`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+get_window_rect
+
+### output ###
+# {
+#   "height": 767,
+#   "width": 1200,
+#   "x": 22,
+#   "y": 47
+# }
+```
+
 ## Set Window Rect
+### Command
+```bash
+set_window_rect ${x} ${y} ${width} ${height}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+x=50
+y=100
+width=500
+height=600
+
+set_window_rect ${x} ${y} ${width} ${height}
+### output ###
+# {
+#   "height": 600,
+#   "width": 500,
+#   "x": 50,
+#   "y": 100
+# }
+
+```
+
 ## Maximize Window
+Increase the window to the maximum available size without going full-screen.
+
+### Command
+`maximize_window`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+maximize_window
+```
+
 ## Minimize Window
+Hide window.
+
+### Command
+`maximize_window`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+minimize_window
+```
 ## Fullscreen Window
+Set window to fullscreen.
+
+### Command
+`fullscreen_window`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+fullscreen_window
+```
