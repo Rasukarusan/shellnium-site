@@ -36,5 +36,6 @@ export default {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Shellnium: Web Driver by Bash" />
     <meta name="og:title" content="Shellnium: Web Driver by Bash" />
+    <meta name="og:image" content="/header-light.png" />
   </>
 }
