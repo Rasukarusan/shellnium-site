@@ -20,20 +20,21 @@ source ./selenium.sh
 
 main() {
     # Open the URL
-    navigate_to 'https://google.co.jp'
+    navigate_to 'https://www.google.com'
 
     # Get the search box
     local searchBox=$(find_element 'name' 'q')
 
     # send keys
-    send_keys $searchBox "animal\n"
+    send_keys $searchBox "panda\n"
 }
 
 main
 ```
 
 ## Demo
-![demo.gif](https://user-images.githubusercontent.com/17779386/85990922-aacbd080-ba2d-11ea-8e88-cc9b79075b31.gif)
+
+![demo.gif](./demo.gif)
 
 ## Methods
 
@@ -81,3 +82,9 @@ Document is [here](/doc) or please see [core.sh](https://github.com/Rasukarusan/
 - maximize_window
 - minimize_window
 - fullscreen_window
+
+## Bonus Demo
+
+demo2.sh
+![demo.gif](https://user-images.githubusercontent.com/17779386/85990922-aacbd080-ba2d-11ea-8e88-cc9b79075b31.gif)
+
