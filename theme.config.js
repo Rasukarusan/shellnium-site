@@ -10,7 +10,7 @@ export default {
   customSearch: null, // customizable, you can use algolia for example
   darkMode: true,
   footer: true,
-  footerText: 'MIT 2021 © Rasukarusan',
+  footerText: <>MIT {new Date().getFullYear()} © Rasukarusan</>,
   footerEditOnGitHubLink: true, // will link to the docs repo
   logo: <>
     <span style={{fontWeight: 'bold', marginRight: 10}}>Shellnium</span>
@@ -34,9 +34,17 @@ export default {
       href="/favicon/android-chrome-256x256.png"
     />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="description" content="Shellnium: Web Driver by Bash" />
+    <meta httpEquiv="Content-Language" content="en" />
     <meta name="og:title" content="Shellnium: Web Driver by Bash" />
     <meta name="og:image" content="https://shellnium-site.vercel.app/ogp.png" />
-    <meta property="og:type" content="website" />
+    <meta name="og:description" content="Shellnium: Web Driver by Bash" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://shellnium-site.vercel.app/ogp.png" />
+    <meta name="twitter:site:domain" content="shellnium-site.vercel.app" />
+    <meta name="twitter:url" content="https://shellnium-site.vercel.app" />
+    <meta name="apple-mobile-web-app-title" content="Shellnium" />
   </>
 }
