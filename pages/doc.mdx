@@ -208,7 +208,7 @@ navigate_to ${url}
 #!/usr/bin/env bash
 source ./lib/selenium.sh
 
-navigate_to https://www.google.com
+navigate_to 'https://www.google.com'
 ```
 
 ## Get Current Url
@@ -221,7 +221,7 @@ Get the current url.
 #!/usr/bin/env bash
 source ./lib/selenium.sh
 
-navigate_to https://www.google.com
+navigate_to 'https://www.google.com'
 
 currentUrl=$(get_current_url)
 # https://www.google.com/
@@ -237,7 +237,7 @@ Get the page title.
 #!/usr/bin/env bash
 source ./lib/selenium.sh
 
-navigate_to https://www.google.com
+navigate_to 'https://www.google.com'
 
 title=$(get_title)
 # Google
@@ -254,7 +254,7 @@ Invoking `window.history.back`.
 source ./lib/selenium.sh
 
 # open google top
-navigate_to https://www.google.com
+navigate_to 'https://www.google.com'
 
 # no page
 back
@@ -272,7 +272,7 @@ Invoking `window.history.forward`.
 source ./lib/selenium.sh
 
 # open google top
-navigate_to https://www.google.com
+navigate_to 'https://www.google.com'
 
 # no page
 back
@@ -292,7 +292,7 @@ Refresh the current page.
 #!/usr/bin/env bash
 source ./lib/selenium.sh
 
-navigate_to https://www.google.com
+navigate_to 'https://www.google.com'
 
 refresh
 ```
