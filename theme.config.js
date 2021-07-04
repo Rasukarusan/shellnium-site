@@ -6,11 +6,11 @@ export default {
   titleSuffix: ' – Shellnium',
   nextLinks: true,
   prevLinks: true,
-  search: true,
+  search: false,
   customSearch: null, // customizable, you can use algolia for example
   darkMode: true,
   footer: true,
-  footerText: 'MIT 2020 © Rasukarusan',
+  footerText: 'MIT 2021 © Rasukarusan',
   footerEditOnGitHubLink: true, // will link to the docs repo
   logo: <>
     <span style={{fontWeight: 'bold', marginRight: 10}}>Shellnium</span>
@@ -36,6 +36,7 @@ export default {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Shellnium: Web Driver by Bash" />
     <meta name="og:title" content="Shellnium: Web Driver by Bash" />
-    <meta name="og:image" content="https://shellnium-site.vercel.app/header-light.png" />
+    <meta name="og:image" content="https://shellnium-site.vercel.app/ogp.png" />
+    <meta property="og:type" content="website" />
   </>
 }
