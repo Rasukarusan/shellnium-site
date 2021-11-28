@@ -943,6 +943,80 @@ newWindow=$(new_window)
 switch_to_window $newWindow
 ```
 
+## Switch To Frame
+Switch to iframe.
+
+### Command
+```bash
+switch_to_frame ${id}
+```
+
+### Example
+
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'file:///Users/$YOU/shellnium/test.html'
+
+switch_to_frame 'exampleFrame'
+button=$(find_element 'id' 'countButton')
+click $button
+```
+
+test.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <iframe id="exampleFrame" src="./frame.html">
+</body>
+</html>
+```
+
+frame.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+<body>
+  <script>
+    function countUp() {
+      var elm = document.getElementById('count')
+      var count = parseInt(elm.innerText)
+      elm.innerText = count + 1
+    }
+  </script>
+  <button id="countButton" onclick="countUp()">click me</button>
+  <span id="count">1</span>
+</body>
+</html>
+```
+
+## Switch To Parent Frame
+Switch to parent frame.
+
+### Command
+```bash
+switch_to_parent_frame
+```
+
+### Example
+
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'file:///Users/$YOU/shellnium/test.html'
+
+# switch to iframe
+switch_to_frame 'exampleFrame'
+button=$(find_element 'id' 'countButton')
+click $button
+
+# back to main window
+switch_to_parent_frame
+```
+
 ## Get Window Rect
 Get current window rect.
 
