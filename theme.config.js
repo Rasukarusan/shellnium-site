@@ -1,6 +1,6 @@
 export default {
   repository: 'https://github.com/Rasukarusan/shellnium', // project repo
-  docsRepository: 'https://github.com/Rasukarusan/shellnium-site', // docs repo
+  docsRepositoryBase: 'https://github.com/Rasukarusan/shellnium-site', // docs repo
   branch: 'master', // branch of docs
   path: '/', // path of docs
   titleSuffix: ' – Shellnium',
