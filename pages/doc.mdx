@@ -812,7 +812,7 @@ element_clear ${searchBox}
 ```
 ---
 
-## Document
+## # Document
 
 ## Exec Script
 Execute Javascript codes.
@@ -861,6 +861,148 @@ screenshot ./lib/hoge.png
 # │   └── util.sh
 ```
 
+---
+
+## Cookies
+
+## Get All Cookies
+### Command
+`get_all_cookies`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+get_all_cookies
+### output ###
+# {
+#   "domain": ".google.com",
+#   "expiry": 1679734375,
+#   "httpOnly": false,
+#   "name": "OGPC",
+#   "path": "/",
+#   "sameSite": "Lax",
+#   "secure": false,
+#   "value": "19027681-1:"
+# }
+# {
+#   "domain": ".google.com",
+#   "expiry": 1692953573,
+#   "httpOnly": true,
+# ...
+```
+
+## Get Named Cookie
+### Command
+```bash
+get_named_cookie "$name"
+````
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+get_named_cookie "OGPC"
+### output ###
+# {
+#   "domain": ".google.com",
+#   "expiry": 1679734849,
+#   "httpOnly": false,
+#   "name": "OGPC",
+#   "path": "/",
+#   "sameSite": "Lax",
+#   "secure": false,
+#   "value": "19027681-1:"
+# }
+```
+
+## Add Cookie
+### Command
+```bash
+add_cookie "$cookie_value"
+````
+
+The `$cookie_value` is a JSON. The JSON keys is following:
+
+- name (required)
+- value (required)
+- path
+- domain
+- expiry
+- secure
+- httpOnly
+- sameSite
+
+
+The reference is <a href="https://www.w3.org/TR/webdriver/#cookies">https://www.w3.org/TR/webdriver/#cookies</a>
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+cookie_value='{"name": "hoge", "value": "Hello World!"}'
+add_cookie "$cookie_value"
+
+# check the cookie
+get_named_cookie "hoge"
+### output ###
+# {
+#   "domain": "www.google.com",
+#   "expiry": 1711701594,
+#   "httpOnly": false,
+#   "name": "hoge",
+#   "path": "/",
+#   "sameSite": "Lax",
+#   "secure": true,
+#   "value": "Hello World!"
+# }
+```
+
+## Delete Cookie
+### Command
+```bash
+delete_cookie "$name" 
+````
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+delete_cookie "OGPC"
+
+# check the cookie
+get_named_cookie "OGPC"
+### output ###
+# {
+#   "message": "no such cookie\n  (Session info: chrome=110.0.5481.100)\n  (Driver info: chromedriver=110.0.5481.77 (65ed616c6e8ee3fe0ad64fe83796c020644d42af-refs/branch-heads/5481@{#839}),platform=Mac OS X 12.5.0 arm64)"
+# }
+
+```
+
+## Delete All Cookies
+### Command
+
+`delete_all_cookies`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+delete_all_cookies
+```
 ---
 
 ## # Context
