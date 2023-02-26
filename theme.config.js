@@ -1,17 +1,11 @@
 export default {
-  repository: 'https://github.com/Rasukarusan/shellnium', // project repo
-  docsRepository: 'https://github.com/Rasukarusan/shellnium-site', // docs repo
-  branch: 'master', // branch of docs
-  path: '/', // path of docs
-  titleSuffix: ' – Shellnium',
-  nextLinks: true,
-  prevLinks: true,
-  search: false,
-  customSearch: null, // customizable, you can use algolia for example
-  darkMode: true,
-  footer: true,
-  footerText: <>MIT {new Date().getFullYear()} © Rasukarusan</>,
-  footerEditOnGitHubLink: true, // will link to the docs repo
+  project: {
+    link: 'https://github.com/Rasukarusan/shellnium',
+  },
+  docsRepositoryBase: 'https://github.com/Rasukarusan/shellnium-site', // docs repo
+  sidebar: {
+    toggleButton: true
+  },
   logo: <>
     <span style={{fontWeight: 'bold', marginRight: 10}}>Shellnium</span>
     <span style={{color: 'gray'}}>Selenium Web Driver for Bash</span>
