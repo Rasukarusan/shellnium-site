@@ -3,6 +3,13 @@ Shellnium Doc
 
 This is doc for [shellnium](https://github.com/Rasukarusan/shellnium).
 
+## Requirement
+
+```sh
+$ node -v
+v16.6.0
+```
+
 ## Getting Started
 
 ```sh

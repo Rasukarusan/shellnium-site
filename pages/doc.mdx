@@ -5,9 +5,9 @@ In order to better understand what is webdriver, we recommend reading [this docu
 
 --- 
 
-## # Sessions
+## 1. Sessions
 
-## Is Ready
+## 1.1 Is Ready
 
 Check if ChromeDriver is running.  
 Usually, this method is executed at the beginning of the script.
@@ -26,7 +26,7 @@ if [ "$(is_ready)" != 'true' ]; then
 fi
 ```
 
-## New Session
+## 1.2 New Session
 
 Creates a new WebDriver session.
 
@@ -54,7 +54,7 @@ sessionId=$(new_session --headless)
 sessionId=$(new_session --headless --lang=es)
 ```
 
-## Delete Session
+## 1.3 Delete Session
 
 Close the session.
 
@@ -75,8 +75,8 @@ delete_session
 ```
 ---
 
-## # Timeouts
-## Get Timeouts
+## 2. Timeouts
+## 2.1 Get Timeouts
 Return the active session’s timeouts configuration. The configuration detail is [here](https://www.w3.org/TR/webdriver/#dfn-timeouts-configuration).
 
 ### Command
@@ -96,7 +96,7 @@ timeConfig=$(get_timeouts)
 #   "script": 30000
 # }
 ```
-## Set Timeouts
+## 2.2 Set Timeouts
 Set timeouts configuration.
 ### Command
 ```bash
@@ -123,7 +123,7 @@ get_timeouts
 # }
 ```
 
-## Set Timeout Script
+## 2.3 Set Timeout Script
 Set script timeouts.
 
 ### Command
@@ -148,7 +148,7 @@ get_timeouts
 # }
 
 ```
-## Set Timeout PageLoad
+## 2.4 Set Timeout PageLoad
 Set pageLoad timeouts.
 ### Command
 ```bash
@@ -170,7 +170,7 @@ get_timeouts
 #   "script": 30000
 # }
 ```
-## Set Timeout Implicit
+## 2.5 Set Timeout Implicit
 Set implicit timeouts.
 ### Command
 ```bash
@@ -195,9 +195,9 @@ get_timeouts
 ```
 ---
 
-## # Navigation
+## 3. Navigation
 
-## Navigate To
+## 3.1 Navigate To
 Open the url.
 ### Command
 ```bash
@@ -212,7 +212,7 @@ source ./lib/selenium.sh
 navigate_to 'https://www.google.com'
 ```
 
-## Get Current Url
+## 3.2 Get Current Url
 Get the current url.
 ### Command
 `get_current_url`
@@ -228,7 +228,7 @@ currentUrl=$(get_current_url)
 # https://www.google.com/
 ```
 
-## Get Title
+## 3.3 Get Title
 Get the page title.
 ### Command
 `get_title`
@@ -244,7 +244,7 @@ title=$(get_title)
 # Google
 ```
 
-## Back
+## 3.4 Back
 Invoking `window.history.back`.
 ### Command
 `back`
@@ -261,7 +261,7 @@ navigate_to 'https://www.google.com'
 back
 ```
 
-## Forward
+## 3.5 Forward
 Invoking `window.history.forward`.
 
 ### Command
@@ -282,7 +282,7 @@ back
 forward
 ```
 
-## Refresh
+## 3.6 Refresh
 Refresh the current page.
 
 ### Command
@@ -300,9 +300,9 @@ refresh
 
 ---
 
-## # Element Retrieval
+## 4. Element Retrieval
 
-## Find Element
+## 4.1 Find Element
 You can use `find_element` method to find a element.
 
 #### Command
@@ -336,7 +336,7 @@ searchBox=$(find_element 'name' 'q')
 send_keys $searchBox "animal\n"
 ```
 
-## Find Element By Id
+## 4.2 Find Element By Id
 
 Example usage:
 ```html
@@ -354,7 +354,7 @@ Command usage:
 element=$(find_element 'id' 'welcome')
 ```
 
-## Find Element By Name
+## 4.3 Find Element By Name
 
 Example usage:
 ```html
@@ -372,7 +372,7 @@ Command usage:
 element=$(find_element 'name' 'username')
 ```
 
-## Find Element By Css Selector
+## 4.4 Find Element By Css Selector
 
 Example usage:
 ```html
@@ -390,7 +390,7 @@ Command usage:
 element=$(find_element 'css selector' 'p.content')
 ```
 
-## Find Element By Link Text
+## 4.5 Find Element By Link Text
 
 Example usage:
 ```html
@@ -408,7 +408,7 @@ Command usage:
 element=$(find_element 'link text' 'Login')
 ```
 
-## Find Element By Partial Link Text
+## 4.6 Find Element By Partial Link Text
 
 Example usage:
 ```html
@@ -426,7 +426,7 @@ Command usage:
 element=$(find_element 'partial link text' 'Log')
 ```
 
-## Find Element By Tag Name
+## 4.7 Find Element By Tag Name
 
 Example usage:
 ```html
@@ -444,7 +444,7 @@ Command usage:
 element=$(find_element 'tag name' 'h1')
 ```
 
-## Find Element By Class Name
+## 4.8 Find Element By Class Name
 
 Example usage:
 ```html
@@ -462,7 +462,7 @@ Command usage:
 element=$(find_element 'class name' 'title')
 ```
 
-## Find Element By Xpath
+## 4.9 Find Element By Xpath
 
 Example usage:
 ```html
@@ -483,7 +483,7 @@ Command usage:
 element=$(find_element 'xpath' '//*[@id="contents"]/p[1]')
 ```
 
-## Find Elements
+## 4.10 Find Elements
 To find multiple elements, you can use `find_elements` method.
 
 ### Command
@@ -522,7 +522,7 @@ done
 # Terms
 ```
 
-## Find Element From Element
+## 4.11 Find Element From Element
 Example usage:
 ```html
 <html>
@@ -546,7 +546,7 @@ get_text ${title}
 # Welcome
 ```
 
-## Find Elements From Element
+## 4.12 Find Elements From Element
 Example usage:
 ```html
 <html>
@@ -573,7 +573,7 @@ done
 # Welcome1
 # Welcome2
 ```
-## Get Active Element
+## 4.13 Get Active Element
 Get a active element.
 
 ### Command
@@ -592,9 +592,9 @@ searchBox=$(get_active_element)
 
 ---
 
-## # Element State
+## 5. Element State
 
-## Get Attribute
+## 5.1 Get Attribute
 Example usage:
 ```html
 <html>
@@ -614,7 +614,7 @@ get_attribute ${element} 'style'
 # color:red;
 ```
 
-## Get Property
+## 5.2 Get Property
 Example usage:
 ```html
 <html>
@@ -635,7 +635,7 @@ get_property ${input} 'value'
 # hoge
 ```
 
-## Get Css Value
+## 5.3 Get Css Value
 Example usage:
 ```html
 <html>
@@ -660,7 +660,7 @@ get_css_value ${element} 'display'
 # block
 ```
 
-## Get Text
+## 5.4 Get Text
 Example usage:
 ```html
 <html>
@@ -680,7 +680,7 @@ get_text ${element}
 # Welcome
 ```
 
-## Get Tag Name
+## 5.5 Get Tag Name
 Example usage:
 ```html
 <html>
@@ -700,7 +700,7 @@ get_tag_name ${element}
 # h1
 ```
 
-## Get Rect
+## 5.6 Get Rect
 Example usage:
 ```html
 <html>
@@ -724,7 +724,7 @@ get_rect ${element}
 #   "y": 8
 # }
 ```
-## Is Element Enabled
+## 5.7 Is Element Enabled
 Example usage:
 ```html
 <html>
@@ -745,9 +745,9 @@ is_element_enabled ${element}
 ```
 ---
 
-## # Element Interaction
+## 6. Element Interaction
 
-## Send Keys
+## 6.1 Send Keys
 Set text to the input element.
 
 ### Command
@@ -769,7 +769,7 @@ send_keys ${searchBox} "animal\n"
 ```
 
 
-## Click
+## 6.2 Click
 Click the element.
 ### Command
 ```bash
@@ -788,7 +788,7 @@ searchBox=$(find_element 'name' 'q')
 click ${searchBox}
 ```
 
-## Element Clear
+## 6.3 Element Clear
 
 Set an empty string to input element.
 
@@ -812,9 +812,9 @@ element_clear ${searchBox}
 ```
 ---
 
-## Document
+## 7. Document
 
-## Exec Script
+## 7.1 Exec Script
 Execute Javascript codes.
 ### Command
 ```bash
@@ -831,7 +831,7 @@ navigate_to 'https://www.google.com'
 exec_script "alert('hoge')"
 ```
 
-## Screenshot
+## 7.2 Screenshot
 Screenshot the current page.
 ### Command
 ```bash
@@ -863,9 +863,151 @@ screenshot ./lib/hoge.png
 
 ---
 
-## # Context
+## 8. Cookies
 
-## Get Window Handle
+## 8.1 Get All Cookies
+### Command
+`get_all_cookies`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+get_all_cookies
+### output ###
+# {
+#   "domain": ".google.com",
+#   "expiry": 1679734375,
+#   "httpOnly": false,
+#   "name": "OGPC",
+#   "path": "/",
+#   "sameSite": "Lax",
+#   "secure": false,
+#   "value": "19027681-1:"
+# }
+# {
+#   "domain": ".google.com",
+#   "expiry": 1692953573,
+#   "httpOnly": true,
+# ...
+```
+
+## 8.2 Get Named Cookie
+### Command
+```bash
+get_named_cookie "$name"
+````
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+get_named_cookie "OGPC"
+### output ###
+# {
+#   "domain": ".google.com",
+#   "expiry": 1679734849,
+#   "httpOnly": false,
+#   "name": "OGPC",
+#   "path": "/",
+#   "sameSite": "Lax",
+#   "secure": false,
+#   "value": "19027681-1:"
+# }
+```
+
+## 8.3 Add Cookie
+### Command
+```bash
+add_cookie "$cookie_value"
+````
+
+The `$cookie_value` is a JSON. The JSON keys is following:
+
+- name (required)
+- value (required)
+- path
+- domain
+- expiry
+- secure
+- httpOnly
+- sameSite
+
+
+The reference is <a href="https://www.w3.org/TR/webdriver/#cookies">https://www.w3.org/TR/webdriver/#cookies</a>
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+cookie_value='{"name": "hoge", "value": "Hello World!"}'
+add_cookie "$cookie_value"
+
+# check the cookie
+get_named_cookie "hoge"
+### output ###
+# {
+#   "domain": "www.google.com",
+#   "expiry": 1711701594,
+#   "httpOnly": false,
+#   "name": "hoge",
+#   "path": "/",
+#   "sameSite": "Lax",
+#   "secure": true,
+#   "value": "Hello World!"
+# }
+```
+
+## 8.4 Delete Cookie
+### Command
+```bash
+delete_cookie "$name" 
+````
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+delete_cookie "OGPC"
+
+# check the cookie
+get_named_cookie "OGPC"
+### output ###
+# {
+#   "message": "no such cookie\n  (Session info: chrome=110.0.5481.100)\n  (Driver info: chromedriver=110.0.5481.77 (65ed616c6e8ee3fe0ad64fe83796c020644d42af-refs/branch-heads/5481@{#839}),platform=Mac OS X 12.5.0 arm64)"
+# }
+
+```
+
+## 8.5 Delete All Cookies
+### Command
+
+`delete_all_cookies`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+delete_all_cookies
+```
+---
+
+## 9. Context
+
+## 9.1 Get Window Handle
 ### Command
 `get_window_handle`
 
@@ -879,7 +1021,7 @@ get_window_handle
 # CDwindow-FDE2D85F1C439C4AA3817A3000F12212
 ```
 
-## Get Window Handles
+## 9.2 Get Window Handles
 ### Command
 `get_window_handles`
 
@@ -895,7 +1037,7 @@ get_window_handles
 # CDwindow-96116C7F4548CB8B155F8821B6DEFDEB
 ```
 
-## New Window
+## 9.3 New Window
 Create a new tab.
 
 ### Command
@@ -909,7 +1051,7 @@ source ./lib/selenium.sh
 new_window
 ```
 
-## Delete Window
+## 9.4 Delete Window
 Close the tab.
 
 ### Command
@@ -927,7 +1069,7 @@ new_window
 delete_window ${oldWindow}
 ```
 
-## Switch To Window
+## 9.5 Switch To Window
 Switch to the tab.
 
 ### Command
@@ -944,7 +1086,7 @@ newWindow=$(new_window)
 switch_to_window $newWindow
 ```
 
-## Switch To Frame
+## 9.6 Switch To Frame
 Switch to iframe.
 
 More information is [here](https://github.com/Rasukarusan/shellnium/issues/8).
@@ -995,7 +1137,7 @@ frame.html
 </html>
 ```
 
-## Switch To Parent Frame
+## 9.7 Switch To Parent Frame
 Switch to parent frame.
 
 ### Command
@@ -1020,7 +1162,7 @@ click $button
 switch_to_parent_frame
 ```
 
-## Get Window Rect
+## 9.8 Get Window Rect
 Get current window rect.
 
 ### Command
@@ -1042,7 +1184,7 @@ get_window_rect
 # }
 ```
 
-## Set Window Rect
+## 9.9 Set Window Rect
 ### Command
 ```bash
 set_window_rect ${x} ${y} ${width} ${height}
@@ -1069,7 +1211,7 @@ set_window_rect ${x} ${y} ${width} ${height}
 
 ```
 
-## Maximize Window
+## 9.10 Maximize Window
 Increase the window to the maximum available size without going full-screen.
 
 ### Command
@@ -1083,7 +1225,7 @@ source ./lib/selenium.sh
 maximize_window
 ```
 
-## Minimize Window
+## 9.11 Minimize Window
 Hide window.
 
 ### Command
@@ -1096,7 +1238,7 @@ source ./lib/selenium.sh
 
 minimize_window
 ```
-## Fullscreen Window
+## 9.12 Fullscreen Window
 Set window to fullscreen.
 
 ### Command
