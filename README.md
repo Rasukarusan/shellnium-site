@@ -1,4 +1,4 @@
-Shellnium Doc 
+Shellnium Doc
 ====
 
 This is doc for [shellnium](https://github.com/Rasukarusan/shellnium).
@@ -7,13 +7,13 @@ This is doc for [shellnium](https://github.com/Rasukarusan/shellnium).
 
 ```sh
 $ node -v
-v16.6.0
+v18.0.0 or later
 ```
 
 ## Getting Started
 
 ```sh
-yarn
-yarn dev
+npm install
+npm run dev
 open http://localhost:3000
 ```
