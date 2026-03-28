@@ -1230,7 +1230,7 @@ maximize_window
 Hide window.
 
 ### Command
-`maximize_window`
+`minimize_window`
 
 ### Example
 ```bash
@@ -1251,4 +1251,423 @@ Set window to fullscreen.
 source ./lib/selenium.sh
 
 fullscreen_window
+```
+
+---
+
+## 10. Alerts
+
+## 10.1 Get Alert Text
+Get the text from an active alert dialog.
+
+### Command
+`get_alert_text`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+exec_script "alert('Hello!')"
+
+text=$(get_alert_text)
+# Hello!
+```
+
+## 10.2 Send Alert Text
+Send text to an active alert (prompt dialog).
+
+### Command
+```bash
+send_alert_text ${value}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+exec_script "prompt('Enter your name:')"
+
+send_alert_text "shellnium"
+accept_alert
+```
+
+## 10.3 Accept Alert
+Accept (click OK on) an alert dialog.
+
+### Command
+`accept_alert`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+exec_script "alert('Hello!')"
+
+accept_alert
+```
+
+## 10.4 Dismiss Alert
+Dismiss (click Cancel on) an alert dialog.
+
+### Command
+`dismiss_alert`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+exec_script "confirm('Are you sure?')"
+
+dismiss_alert
+```
+
+---
+
+## 11. Document (additional)
+
+## 11.1 Element Screenshot
+Take a screenshot of a specific element.
+
+### Command
+```bash
+element_screenshot ${elementId}
+# or
+element_screenshot ${elementId} ${path}
+```
+Default the screenshot saved to `./screenshot.png`.
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+logo=$(find_element 'css selector' 'img#hplogo')
+element_screenshot $logo ./logo.png
+```
+
+## 11.2 Get Page Source
+Get the HTML source of the current page.
+
+### Command
+`get_page_source`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+source=$(get_page_source)
+echo "$source"
+
+### output ###
+# <!DOCTYPE html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en">...
+```
+
+---
+
+## 12. Actions
+
+Shellnium provides convenience wrappers for [W3C WebDriver Actions](https://www.w3.org/TR/webdriver/#actions).
+
+### Mouse Actions
+
+## 12.1 Mouse Move To
+Move the mouse cursor to an element.
+
+### Command
+```bash
+mouse_move_to ${elementId}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+element=$(find_element 'css selector' '.menu-item')
+mouse_move_to $element
+```
+
+## 12.2 Hover
+Hover over an element. This is an alias for `mouse_move_to`.
+
+### Command
+```bash
+hover ${elementId}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+dropdown=$(find_element 'css selector' '.dropdown')
+hover $dropdown
+# The dropdown menu will appear
+```
+
+## 12.3 Double Click
+Double-click on an element.
+
+### Command
+```bash
+double_click ${elementId}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+element=$(find_element 'id' 'editable')
+double_click $element
+# Selects a word by double-clicking
+```
+
+## 12.4 Right Click
+Right-click (context menu) on an element.
+
+### Command
+```bash
+right_click ${elementId}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+element=$(find_element 'id' 'target')
+right_click $element
+# Opens the context menu
+```
+
+## 12.5 Drag and Drop
+Drag an element from source to target.
+
+### Command
+```bash
+drag_and_drop ${sourceElementId} ${targetElementId}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+source=$(find_element 'id' 'draggable')
+target=$(find_element 'id' 'droppable')
+drag_and_drop $source $target
+```
+
+### Keyboard Actions
+
+## 12.6 Key Press
+Press and release a single key.
+
+### Command
+```bash
+key_press ${key}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+# Press the Enter key
+key_press "$KEY_ENTER"
+
+# Press the Escape key
+key_press "$KEY_ESCAPE"
+```
+
+## 12.7 Key Down
+Hold a key down. Use with `key_up` to release.
+
+### Command
+```bash
+key_down ${key}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+# Hold Shift key
+key_down "$KEY_SHIFT"
+
+# ... perform other actions while Shift is held ...
+
+key_up "$KEY_SHIFT"
+```
+
+## 12.8 Key Up
+Release a held key.
+
+### Command
+```bash
+key_up ${key}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+key_down "$KEY_CONTROL"
+key_press "a"
+key_up "$KEY_CONTROL"
+# This selects all text (Ctrl+A)
+```
+
+## 12.9 Send Key Combo
+Send a key combination (modifier + key).
+
+### Command
+```bash
+send_key_combo ${modifier} ${key}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+# Ctrl+A (select all)
+send_key_combo "$KEY_CONTROL" "a"
+
+# Ctrl+C (copy)
+send_key_combo "$KEY_CONTROL" "c"
+
+# Ctrl+V (paste)
+send_key_combo "$KEY_CONTROL" "v"
+```
+
+### Low-Level Actions API
+
+## 12.10 Perform Actions
+Execute low-level [W3C WebDriver Actions](https://www.w3.org/TR/webdriver/#perform-actions). Accepts a JSON string describing the actions to perform.
+
+### Command
+```bash
+perform_actions ${actions_json}
+```
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+element=$(find_element 'id' 'target')
+
+# Move mouse to element and click
+actions='{"actions":[{"type":"pointer","id":"mouse","parameters":{"pointerType":"mouse"},"actions":[{"type":"pointerMove","duration":100,"origin":{"ELEMENT":"'$element'"},"x":0,"y":0},{"type":"pointerDown","button":0},{"type":"pointerUp","button":0}]}]}'
+perform_actions "$actions"
+```
+
+## 12.11 Release Actions
+Release all held keys and pointer buttons.
+
+### Command
+`release_actions`
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://example.com'
+
+key_down "$KEY_SHIFT"
+# ... actions with shift held ...
+release_actions
+# All keys and buttons are now released
+```
+
+---
+
+## 13. Key Constants
+
+Shellnium provides key constants for use with `send_keys`, `key_press`, `key_down`, `key_up`, and `send_key_combo`.
+
+| Constant | Key |
+|----------|-----|
+| `KEY_BACKSPACE` | Backspace |
+| `KEY_TAB` | Tab |
+| `KEY_RETURN` | Return |
+| `KEY_ENTER` | Enter |
+| `KEY_SHIFT` | Shift |
+| `KEY_CONTROL` | Control |
+| `KEY_ALT` | Alt |
+| `KEY_ESCAPE` | Escape |
+| `KEY_SPACE` | Space |
+| `KEY_PAGE_UP` | Page Up |
+| `KEY_PAGE_DOWN` | Page Down |
+| `KEY_END` | End |
+| `KEY_HOME` | Home |
+| `KEY_ARROW_LEFT` | Left Arrow |
+| `KEY_ARROW_UP` | Up Arrow |
+| `KEY_ARROW_RIGHT` | Right Arrow |
+| `KEY_ARROW_DOWN` | Down Arrow |
+| `KEY_INSERT` | Insert |
+| `KEY_DELETE` | Delete |
+| `KEY_F1` | F1 |
+| `KEY_F12` | F12 |
+| `KEY_META` | Meta / Command |
+
+### Example
+```bash
+#!/usr/bin/env bash
+source ./lib/selenium.sh
+
+navigate_to 'https://www.google.com'
+
+searchBox=$(find_element 'name' 'q')
+
+# Type text and press Enter
+send_keys $searchBox "panda${KEY_ENTER}"
+
+# Press Tab to move focus
+send_keys $searchBox "${KEY_TAB}"
+
+# Select all with Ctrl+A
+send_key_combo "$KEY_CONTROL" "a"
 ```
